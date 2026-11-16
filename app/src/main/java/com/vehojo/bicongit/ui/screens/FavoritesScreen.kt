@@ -1,0 +1,39 @@
+package com.vehojo.bicongit.ui.screens
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import com.vehojo.bicongit.ui.NavBar
+import com.vehojo.bicongit.ui.Test
+import com.vehojo.bicongit.ui.theme.Active
+import com.vehojo.bicongit.ui.theme.Background
+import com.vehojo.bicongit.ui.theme.Inactive
+
+@Composable
+fun FavoritesScreen(
+    onSearchScreen: () -> Unit,
+    onFavoritesScreen: () -> Unit,
+    onProfileScreen: () -> Unit
+) {
+    Column(modifier = Modifier.fillMaxSize().background(Background)) {
+        Spacer(modifier = Modifier.systemBarsPadding().padding(30.dp))
+        Test(test = "Favorite Screen")
+        Spacer(modifier = Modifier.weight(1f))
+        NavBar(
+            onSearchScreen = onSearchScreen,
+            onProfileScreen = onProfileScreen,
+            onFavoritesScreen = onFavoritesScreen,
+            favoritesCol = Active,
+            favoritesWeight = FontWeight.SemiBold,
+        )
+        Spacer(modifier = Modifier.navigationBarsPadding())
+    }
+}
