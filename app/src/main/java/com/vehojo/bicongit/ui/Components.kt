@@ -1,12 +1,17 @@
 package com.vehojo.bicongit.ui
 
+import android.R.attr.tint
 import android.media.Image
 import android.widget.Space
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -22,6 +27,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,9 +40,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.unit.times
 import com.vehojo.bicongit.R
+import com.vehojo.bicongit.navigation.Destination
 import com.vehojo.bicongit.ui.theme.Active
 import com.vehojo.bicongit.ui.theme.Background
+import com.vehojo.bicongit.ui.theme.ButtonColor
 import com.vehojo.bicongit.ui.theme.Inactive
 import com.vehojo.bicongit.ui.theme.Inter
 import com.vehojo.bicongit.ui.theme.Purple40
@@ -45,82 +54,128 @@ import com.vehojo.bicongit.ui.theme.onBackground
 
 @Composable
 fun NavBar(
+    currentRoute: String?,
     onSearchScreen: () -> Unit,
     onFavoritesScreen: () -> Unit,
-    onProfileScreen: () -> Unit,
-    searchCol: Color = Inactive,
-    favoritesCol: Color = Inactive,
-    profileCol: Color = Inactive,
-    searchWeight: FontWeight = FontWeight.Normal,
-    favoritesWeight: FontWeight = FontWeight.Normal,
-    profilesWeight: FontWeight = FontWeight.Normal
+    onProfileScreen: () -> Unit
 ) {
+    val selectedIndex = when (currentRoute) {
+        Destination.SearchScreen.route -> 0
+        Destination.FavoritesScreen.route -> 1
+        Destination.ProfileScreen.route -> 2
+        else -> 0
+    }
+    val searchSelected = currentRoute == Destination.SearchScreen.route
+    val favoritesSelected = currentRoute == Destination.FavoritesScreen.route
+    val profileSelected = currentRoute == Destination.ProfileScreen.route
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.background(Background)
     ) {
         Spacer(modifier = Modifier.background(onBackground).fillMaxWidth().height(2.dp))
         Spacer(modifier = Modifier.height(12.dp))
 
-        Row(horizontalArrangement = Arrangement.SpaceEvenly, modifier = Modifier.fillMaxWidth()) {
-
-            Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.clickable{onSearchScreen()}) {
-                Icon(
-                    modifier = Modifier.size(25.dp),
-                    imageVector = ImageVector.vectorResource(id = R.drawable.search_icon),
-                    contentDescription = "search",
-                    tint = searchCol
+        Box {
+            BoxWithConstraints(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                val tabWidth = maxWidth / 3
+                val indicatorWidth = tabWidth - 12.dp
+                val offset by animateDpAsState(
+                    targetValue = tabWidth * selectedIndex,
+                    animationSpec = tween(500)
                 )
+                val extraOffset = when (selectedIndex) {
+                    0 -> 24.dp
+                    1 -> 3.dp
+                    2 -> (-18).dp
+                    else -> 0.dp
+                }
 
-                Spacer(modifier = Modifier.height(4.dp))
-
-                Text(
-                    text = "Search",
-                    color = searchCol,
-                    fontSize = 13.sp,
-                    fontFamily = Inter,
-                    fontWeight = searchWeight
-                )
-            }
-
-            Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.clickable{onFavoritesScreen()}) {
-                Icon(
-                    modifier = Modifier.size(25.dp),
-                    imageVector = ImageVector.vectorResource(id = R.drawable.favorites_icon),
-                    contentDescription = "favorites",
-                    tint = favoritesCol
-                )
-
-                Spacer(modifier = Modifier.height(4.dp))
-
-                Text(
-                    text = "Favorites",
-                    color = favoritesCol,
-                    fontSize = 13.sp,
-                    fontFamily = Inter,
-                    fontWeight = favoritesWeight
+                Box(
+                    modifier = Modifier
+                        .offset(x = offset + extraOffset, y = (-6).dp)
+                        .width(indicatorWidth)
+                        .height(65.dp)
+                        .padding(horizontal = 6.dp)
+                        .border(
+                            width = 2.dp,
+                            color = ButtonColor,
+                            shape = RoundedCornerShape(16.dp)
+                        )
                 )
             }
 
-            Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.clickable{onProfileScreen()}) {
-                Icon(
-                    modifier = Modifier.size(25.dp),
-                    imageVector = ImageVector.vectorResource(id = R.drawable.profile_icon),
-                    contentDescription = "profile",
-                    tint = profileCol
-                )
+            Row(
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                modifier = Modifier.fillMaxWidth()
+            ) {
 
-                Spacer(modifier = Modifier.height(4.dp))
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.clickable { onSearchScreen() }) {
+                    Icon(
+                        modifier = Modifier.size(25.dp),
+                        imageVector = ImageVector.vectorResource(id = R.drawable.search_icon),
+                        contentDescription = "search",
+                        tint = if (searchSelected) Active else Inactive
+                    )
 
-                Text(
-                    text = "Profile",
-                    color = profileCol,
-                    fontSize = 13.sp,
-                    fontFamily = Inter,
-                    fontWeight = profilesWeight
-                )
+                    Spacer(modifier = Modifier.height(4.dp))
+
+                    Text(
+                        text = "Search",
+                        color = if (searchSelected) Active else Inactive,
+                        fontSize = 13.sp,
+                        fontFamily = Inter,
+                        fontWeight = if (searchSelected) FontWeight.SemiBold else FontWeight.Normal
+                    )
+                }
+
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.clickable { onFavoritesScreen() }) {
+                    Icon(
+                        modifier = Modifier.size(25.dp),
+                        imageVector = ImageVector.vectorResource(id = R.drawable.favorites_icon),
+                        contentDescription = "favorites",
+                        tint = if (favoritesSelected) Active else Inactive
+                    )
+
+                    Spacer(modifier = Modifier.height(4.dp))
+
+                    Text(
+                        text = "Favorites",
+                        color = if (favoritesSelected) Active else Inactive,
+                        fontSize = 13.sp,
+                        fontFamily = Inter,
+                        fontWeight = if (favoritesSelected) FontWeight.SemiBold else FontWeight.Normal
+                    )
+                }
+
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.clickable { onProfileScreen() }) {
+                    Icon(
+                        modifier = Modifier.size(25.dp),
+                        imageVector = ImageVector.vectorResource(id = R.drawable.profile_icon),
+                        contentDescription = "profile",
+                        tint = if (profileSelected) Active else Inactive
+                    )
+
+                    Spacer(modifier = Modifier.height(4.dp))
+
+                    Text(
+                        text = "Profile",
+                        color = if (profileSelected) Active else Inactive,
+                        fontSize = 13.sp,
+                        fontFamily = Inter,
+                        fontWeight = if (profileSelected) FontWeight.SemiBold else FontWeight.Normal
+                    )
+                }
             }
         }
-        Spacer(modifier = Modifier.height(15.dp))
+        Spacer(modifier = Modifier.navigationBarsPadding())
     }
 }
 
@@ -188,15 +243,10 @@ fun Test(
 @Composable
 fun NavBarPreview() {
     NavBar(
+        currentRoute = null,
         onFavoritesScreen = {},
         onProfileScreen = {},
-        onSearchScreen = {},
-        searchCol = Active,
-        favoritesCol = Inactive,
-        profileCol = Inactive,
-        searchWeight = FontWeight.SemiBold,
-        favoritesWeight = FontWeight.Normal,
-        profilesWeight = FontWeight.Normal
+        onSearchScreen = {}
     )
 }
 

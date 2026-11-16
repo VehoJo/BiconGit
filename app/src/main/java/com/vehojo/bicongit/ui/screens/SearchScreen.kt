@@ -50,28 +50,18 @@ import com.vehojo.bicongit.ui.theme.Inactive
 import com.vehojo.bicongit.ui.theme.Inter
 import com.vehojo.bicongit.ui.theme.White
 
+@Preview
 @Composable
-fun SearchScreen(
-    onSearchScreen: () -> Unit,
-    onFavoritesScreen: () -> Unit,
-    onProfileScreen: () -> Unit
-) {
+fun SearchScreen() {
     Column(modifier = Modifier.fillMaxSize().background(Background)) {
         Spacer(modifier = Modifier.systemBarsPadding().padding(top = 15.dp))
-        SearchHeader(modifier = Modifier.weight(1f))
-        NavBar(
-            onSearchScreen = onSearchScreen,
-            onProfileScreen = onProfileScreen,
-            onFavoritesScreen = onFavoritesScreen,
-            searchCol = Active,
-            searchWeight = FontWeight.SemiBold,
-        )
+        SearchMain()
         Spacer(modifier = Modifier.navigationBarsPadding())
     }
 }
 
 @Composable
-fun SearchHeader(modifier: Modifier = Modifier) {
+fun SearchMain(modifier: Modifier = Modifier) {
     var username by remember {
         mutableStateOf("")
     }
@@ -157,8 +147,8 @@ fun SearchHeader(modifier: Modifier = Modifier) {
         Spacer(modifier = Modifier.height(24.dp))
 
         LazyColumn(modifier = Modifier.weight(1f)) {
-            item {
 
+            item {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
                         text = "Recent searches",
@@ -217,7 +207,9 @@ fun SearchHeader(modifier: Modifier = Modifier) {
 
 
                 Spacer(modifier = Modifier.height(24.dp))
+            }
 
+            item {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
                         text = "Popular Developer",

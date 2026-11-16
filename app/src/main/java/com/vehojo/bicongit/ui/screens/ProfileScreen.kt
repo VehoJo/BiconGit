@@ -20,22 +20,11 @@ import com.vehojo.bicongit.ui.theme.Background
 import com.vehojo.bicongit.ui.theme.Inactive
 
 @Composable
-fun ProfileScreen(
-    onSearchScreen: () -> Unit,
-    onFavoritesScreen: () -> Unit,
-    onProfileScreen: () -> Unit
-) {
+fun ProfileScreen() {
     Column(modifier = Modifier.fillMaxSize().background(Background)) {
         Spacer(modifier = Modifier.systemBarsPadding().padding(30.dp))
         Test(test = "Profile Screen")
         Spacer(modifier = Modifier.weight(1f))
-        NavBar(
-            onSearchScreen = onSearchScreen,
-            onProfileScreen = onProfileScreen,
-            onFavoritesScreen = onFavoritesScreen,
-            profileCol = Active,
-            profilesWeight = FontWeight.SemiBold,
-        )
         Spacer(modifier = Modifier.navigationBarsPadding())
     }
 }
