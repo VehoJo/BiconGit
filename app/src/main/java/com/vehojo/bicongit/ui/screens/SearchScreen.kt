@@ -1,8 +1,14 @@
 package com.vehojo.bicongit.ui.screens
 
 import android.R.attr.top
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -19,6 +25,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -52,14 +59,29 @@ import com.vehojo.bicongit.ui.theme.White
 
 @Preview
 @Composable
-fun SearchScreen() {
+fun SearchScreen(showContent: Boolean = true) {
     Column(modifier = Modifier.fillMaxSize().background(Background)) {
         Spacer(modifier = Modifier.systemBarsPadding().padding(top = 15.dp))
-        SearchMain()
+
+        Box(modifier = Modifier.weight(1f).fillMaxWidth()) {
+            AnimatedContent(
+                targetState = showContent,
+                transitionSpec = { fadeIn(tween(250)) togetherWith fadeOut(tween(150)) },
+                label = "searchContent"
+            ) { ready ->
+                if (ready) {
+                    SearchMain(modifier = Modifier.fillMaxSize())
+                } else {
+                    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        CircularProgressIndicator(color = ButtonColor)
+                    }
+                }
+            }
+        }
+
         Spacer(modifier = Modifier.navigationBarsPadding())
     }
 }
-
 @Composable
 fun SearchMain(modifier: Modifier = Modifier) {
     var username by remember {
