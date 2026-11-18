@@ -37,6 +37,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -48,8 +49,9 @@ import com.vehojo.bicongit.ui.theme.Background
 import com.vehojo.bicongit.ui.theme.ButtonColor
 import com.vehojo.bicongit.ui.theme.Inactive
 import com.vehojo.bicongit.ui.theme.Inter
-import com.vehojo.bicongit.ui.theme.Purple40
+import com.vehojo.bicongit.ui.theme.Purple
 import com.vehojo.bicongit.ui.theme.White
+import com.vehojo.bicongit.ui.theme.Yellow
 import com.vehojo.bicongit.ui.theme.onBackground
 
 @Composable
@@ -180,6 +182,135 @@ fun NavBar(
 }
 
 @Composable
+fun Repositories(
+    name: String,
+    description: String,
+    backgroundProgLang: Color,
+    progLang: String,
+    star: String,
+    fork: String,
+    iconColor: Color
+) {
+    Column(modifier = Modifier
+        .fillMaxWidth()
+        .clip(RoundedCornerShape(12.dp))
+        .background(White.copy(alpha = 0.05f))
+        .border(
+            width = 1.dp,
+            color = White.copy(alpha = 0.35f),
+            shape = RoundedCornerShape(12.dp)
+        )
+        .padding(horizontal = 16.dp)
+    ) {
+        Spacer(modifier = Modifier.height(15.dp))
+
+        Row {
+            Text(
+                text = name,
+                color = ButtonColor,
+                fontSize = 15.sp,
+                fontFamily = Inter,
+                fontWeight = FontWeight.SemiBold,
+            )
+
+            Spacer(modifier = Modifier.weight(1f))
+
+            Icon(
+                painter = painterResource(R.drawable.favorites_icon),
+                contentDescription = "favorites",
+                Modifier.size(16.dp),
+                tint = iconColor
+            )
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Text(
+            text = description,
+            color = White.copy(alpha = 0.35f),
+            fontSize = 13.sp,
+            fontFamily = Inter,
+            overflow = TextOverflow.Ellipsis,
+            lineHeight = 18.sp,
+            maxLines = 2,
+            fontWeight = FontWeight.Normal,
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        Row {
+            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.width(85.dp)) {
+
+                Box(modifier = Modifier.clip(CircleShape).size(8.dp).background(backgroundProgLang))
+
+                Spacer(modifier = Modifier.width(5.dp))
+
+                Text(
+                    text = progLang,
+                    color = White.copy(alpha = 0.35f),
+                    fontSize = 13.sp,
+                    fontFamily = Inter,
+                    lineHeight = 18.sp,
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 1,
+                    fontWeight = FontWeight.Medium,
+                )
+            }
+
+            Spacer(modifier = Modifier.width(20.dp))
+
+            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.width(85.dp)) {
+
+                Icon(
+                    painter = painterResource(R.drawable.star_icon),
+                    contentDescription = "github star",
+                    Modifier.size(14.dp),
+                    tint = White.copy(alpha = 0.35f)
+                )
+
+                Spacer(modifier = Modifier.width(5.dp))
+
+                Text(
+                    text = star,
+                    color = White.copy(alpha = 0.35f),
+                    fontSize = 13.sp,
+                    fontFamily = Inter,
+                    lineHeight = 18.sp,
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 1,
+                    fontWeight = FontWeight.Medium,
+                )
+            }
+
+            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.width(85.dp)) {
+
+                Icon(
+                    painter = painterResource(R.drawable.fork_icon),
+                    contentDescription = "github fork",
+                    Modifier.size(14.dp),
+                    tint = White.copy(alpha = 0.35f)
+                )
+
+                Spacer(modifier = Modifier.width(5.dp))
+
+                Text(
+                    text = fork,
+                    color = White.copy(alpha = 0.35f),
+                    fontSize = 13.sp,
+                    fontFamily = Inter,
+                    lineHeight = 18.sp,
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 1,
+                )
+            }
+        }
+        Spacer(modifier = Modifier.height(17.5.dp))
+    }
+    Spacer(modifier = Modifier.height(12.dp))
+}
+
+@Composable
 fun DevProfile(
     icon: Int,
     name: String,
@@ -232,7 +363,7 @@ fun Test(
 ) {
     Text(
         text = test,
-        color = Purple40,
+        color = Purple,
         fontSize = 50.sp,
         fontFamily = Inter,
         fontWeight = FontWeight.Medium

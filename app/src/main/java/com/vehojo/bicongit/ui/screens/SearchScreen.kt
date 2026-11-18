@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
@@ -41,6 +42,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -73,7 +75,7 @@ fun SearchScreen(showContent: Boolean = true) {
                     SearchMain(modifier = Modifier.fillMaxSize())
                 } else {
                     Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        CircularProgressIndicator(color = ButtonColor)
+                        CircularProgressIndicator(color = Active)
                     }
                 }
             }
@@ -136,6 +138,14 @@ fun SearchMain(modifier: Modifier = Modifier) {
                 )
             },
             modifier = Modifier.fillMaxWidth().height(56.dp),
+            leadingIcon = {
+                Icon(
+                    painter = painterResource(R.drawable.search_icon),
+                    contentDescription = "search",
+                    tint = White.copy(alpha = 0.35f),
+                    modifier = Modifier.size(22.5.dp).offset(x = 5.dp)
+                )
+            },
             colors = OutlinedTextFieldDefaults.colors(
                 unfocusedBorderColor = White.copy(alpha = 0.25f),
                 focusedBorderColor = White.copy(alpha = 0.35f),
