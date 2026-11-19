@@ -2,14 +2,18 @@ package com.vehojo.bicongit.navigation
 
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.vehojo.bicongit.ui.Back
 import com.vehojo.bicongit.ui.screens.FavoritesScreen
 import com.vehojo.bicongit.ui.screens.ProfileScreen
 import com.vehojo.bicongit.ui.screens.SearchScreen
+import com.vehojo.bicongit.ui.screens.DevProfileScreen
+import com.vehojo.bicongit.ui.theme.Background
 
 @Composable
 fun AppNavHost(
@@ -19,7 +23,7 @@ fun AppNavHost(
     NavHost(
         navController = navHostController,
         startDestination = Destination.SearchScreen.route,
-        modifier = modifier
+        modifier = modifier.background(Background)
     ) {
         composable(
             Destination.SearchScreen.route,
@@ -43,7 +47,14 @@ fun AppNavHost(
             }
         ) {
             val animationFinished = transition.currentState == transition.targetState
-            SearchScreen(showContent = animationFinished)
+            SearchScreen(
+                showContent = animationFinished,
+                onDevProfileClick = {
+                    navHostController.safeNavigate(Destination.DevProfileScreen.route) {
+                        launchSingleTop = true
+                    }
+                }
+            )
         }
 
         composable(
@@ -94,6 +105,29 @@ fun AppNavHost(
         ) {
             val animationFinished = transition.currentState == transition.targetState
             ProfileScreen(showContent = animationFinished)
+        }
+
+        composable(
+            Destination.DevProfileScreen.route,
+            enterTransition = {
+                slideIntoContainer(
+                    AnimatedContentTransitionScope.SlideDirection.Left,
+                    tween(500)
+                )
+            },
+            exitTransition = {
+                slideOutOfContainer(
+                    AnimatedContentTransitionScope.SlideDirection.Right,
+                    tween(500)
+                )
+            }
+        ) {
+            val animationFinished = transition.currentState == transition.targetState
+
+            DevProfileScreen(
+                showContent = animationFinished,
+                navHostController = navHostController
+            )
         }
     }
 }

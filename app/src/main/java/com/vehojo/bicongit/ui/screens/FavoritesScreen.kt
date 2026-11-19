@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
@@ -159,34 +160,55 @@ fun FavoritesMain() {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        Repositories(
-            name = "VehoJo/Schejul",
-            description = "Schejul is a simple and modern timetable app designed to help students organize their school day. It provides a clean interface for viewing lessons, checking class times, and keeping track of classrooms",
-            backgroundProgLang = Yellow,
-            progLang = "JavaScript",
-            star = "234B",
-            fork = "43.2B",
-            iconColor = Yellow
-        )
+        LazyColumn(modifier = Modifier.weight(1f)) {
 
-        Repositories(
-            name = "VehoJo/AetherNova",
-            description = "A small single-page application that counts down the time until New Year's",
-            backgroundProgLang = Purple,
-            progLang = "Kotlin",
-            star = "234B",
-            fork = "43.2B",
-            iconColor = Yellow
-        )
+            item {
+                Repositories(
+                    name = "VehoJo/Schejul",
+                    description = "Schejul is a simple and modern timetable app designed to help students organize their school day. It provides a clean interface for viewing lessons, checking class times, and keeping track of classrooms",
+                    backgroundProgLang = Yellow,
+                    progLang = "JavaScript",
+                    star = "234B",
+                    fork = "43.2B",
+                    iconColor = Yellow
+                )
+            }
 
-        Repositories(
-            name = "VehoJo/BiconGit",
-            description = "A modern GitHub client for Android, built with Kotlin and Jetpack Compose",
-            backgroundProgLang = Orange,
-            progLang = "HTML",
-            star = "234B",
-            fork = "43.2B",
-            iconColor = Yellow
-        )
+            item {
+                Repositories(
+                    name = "VehoJo/AetherNova",
+                    description = "A small single-page application that counts down the time until New Year's",
+                    backgroundProgLang = Purple,
+                    progLang = "Kotlin",
+                    star = "234B",
+                    fork = "43.2B",
+                    iconColor = Yellow
+                )
+            }
+
+            item {
+                Repositories(
+                    name = "VehoJo/BiconGit",
+                    description = "A modern GitHub client for Android, built with Kotlin and Jetpack Compose",
+                    backgroundProgLang = Orange,
+                    progLang = "HTML",
+                    star = "234B",
+                    fork = "43.2B",
+                    iconColor = Yellow
+                )
+            }
+
+            item {
+                Repositories(
+                    name = "VehoJo/BiconGit",
+                    description = "A modern GitHub client for Android, built with Kotlin and Jetpack Compose",
+                    backgroundProgLang = Orange,
+                    progLang = "HTML",
+                    star = "234B",
+                    fork = "43.2B",
+                    iconColor = Yellow
+                )
+            }
+        }
     }
 }

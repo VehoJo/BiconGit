@@ -1,8 +1,6 @@
 package com.vehojo.bicongit.ui
 
-import android.R.attr.tint
-import android.media.Image
-import android.widget.Space
+import android.widget.ImageButton
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
@@ -31,7 +29,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -41,7 +41,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.unit.times
 import com.vehojo.bicongit.R
 import com.vehojo.bicongit.navigation.Destination
 import com.vehojo.bicongit.ui.theme.Active
@@ -49,6 +48,7 @@ import com.vehojo.bicongit.ui.theme.Background
 import com.vehojo.bicongit.ui.theme.ButtonColor
 import com.vehojo.bicongit.ui.theme.Inactive
 import com.vehojo.bicongit.ui.theme.Inter
+import com.vehojo.bicongit.ui.theme.Orange
 import com.vehojo.bicongit.ui.theme.Purple
 import com.vehojo.bicongit.ui.theme.White
 import com.vehojo.bicongit.ui.theme.Yellow
@@ -227,7 +227,7 @@ fun Repositories(
 
         Text(
             text = description,
-            color = White.copy(alpha = 0.35f),
+            color = White.copy(alpha = 0.55f),
             fontSize = 13.sp,
             fontFamily = Inter,
             overflow = TextOverflow.Ellipsis,
@@ -248,7 +248,7 @@ fun Repositories(
 
                 Text(
                     text = progLang,
-                    color = White.copy(alpha = 0.35f),
+                    color = White.copy(alpha = 0.55f),
                     fontSize = 13.sp,
                     fontFamily = Inter,
                     lineHeight = 18.sp,
@@ -266,14 +266,14 @@ fun Repositories(
                     painter = painterResource(R.drawable.star_icon),
                     contentDescription = "github star",
                     Modifier.size(14.dp),
-                    tint = White.copy(alpha = 0.35f)
+                    tint = White.copy(alpha = 0.55f)
                 )
 
                 Spacer(modifier = Modifier.width(5.dp))
 
                 Text(
                     text = star,
-                    color = White.copy(alpha = 0.35f),
+                    color = White.copy(alpha = 0.55f),
                     fontSize = 13.sp,
                     fontFamily = Inter,
                     lineHeight = 18.sp,
@@ -289,14 +289,14 @@ fun Repositories(
                     painter = painterResource(R.drawable.fork_icon),
                     contentDescription = "github fork",
                     Modifier.size(14.dp),
-                    tint = White.copy(alpha = 0.35f)
+                    tint = White.copy(alpha = 0.55f)
                 )
 
                 Spacer(modifier = Modifier.width(5.dp))
 
                 Text(
                     text = fork,
-                    color = White.copy(alpha = 0.35f),
+                    color = White.copy(alpha = 0.55f),
                     fontSize = 13.sp,
                     fontFamily = Inter,
                     lineHeight = 18.sp,
@@ -311,12 +311,44 @@ fun Repositories(
 }
 
 @Composable
+fun Back(text: String, onClick: () -> Unit) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .height(45.dp)
+    ) {
+        Box(modifier = Modifier.clickable{onClick()}) {
+            Image(
+                painter = painterResource(id = R.drawable.next_icon),
+                contentDescription = "Back",
+                modifier = Modifier.size(26.dp).scale(scaleX = -1f, scaleY = 1f),
+                colorFilter = ColorFilter.tint(White)
+            )
+        }
+
+        Spacer(modifier = Modifier.width(6.dp))
+
+        Text(
+            text = text,
+            color = White,
+            fontSize = 18.sp,
+            fontFamily = Inter,
+            fontWeight = FontWeight.Medium
+        )
+    }
+}
+
+@Composable
 fun DevProfile(
     icon: Int,
     name: String,
-    desctiption: String
+    desctiption: String,
+    onDevProfile: () -> Unit
 ) {
-    Row(verticalAlignment = Alignment.CenterVertically) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.clickable{onDevProfile()}
+    ) {
         Image(
             painter = painterResource(id = icon),
             contentDescription = "User Icon",
@@ -387,6 +419,30 @@ fun DevProfilePreview() {
     DevProfile(
         icon = R.drawable.user_icon_1,
         name = "Fork",
-        desctiption = "Just a Fork"
+        desctiption = "Just a Fork",
+        onDevProfile = {}
+    )
+}
+
+@Preview
+@Composable
+fun RepositoriesPreview() {
+    Repositories(
+        name = "Author/Repositories",
+        description = "Repository description",
+        backgroundProgLang = Orange,
+        progLang = "HTML",
+        star = "0",
+        fork = "0",
+        iconColor = Yellow
+    )
+}
+
+@Preview
+@Composable
+fun BackPreview() {
+    Back(
+        text = "go to ...",
+        onClick = {}
     )
 }

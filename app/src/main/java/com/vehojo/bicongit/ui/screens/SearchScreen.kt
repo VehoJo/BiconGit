@@ -59,9 +59,11 @@ import com.vehojo.bicongit.ui.theme.Inactive
 import com.vehojo.bicongit.ui.theme.Inter
 import com.vehojo.bicongit.ui.theme.White
 
-@Preview
 @Composable
-fun SearchScreen(showContent: Boolean = true) {
+fun SearchScreen(
+    showContent: Boolean = true,
+    onDevProfileClick: () -> Unit
+) {
     Column(modifier = Modifier.fillMaxSize().background(Background)) {
         Spacer(modifier = Modifier.systemBarsPadding().padding(top = 15.dp))
 
@@ -72,7 +74,10 @@ fun SearchScreen(showContent: Boolean = true) {
                 label = "searchContent"
             ) { ready ->
                 if (ready) {
-                    SearchMain(modifier = Modifier.fillMaxSize())
+                    SearchMain(
+                        modifier = Modifier.fillMaxSize(),
+                        onDevProfileClick = onDevProfileClick
+                    )
                 } else {
                     Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                         CircularProgressIndicator(color = Active)
@@ -80,12 +85,14 @@ fun SearchScreen(showContent: Boolean = true) {
                 }
             }
         }
-
         Spacer(modifier = Modifier.navigationBarsPadding())
     }
 }
 @Composable
-fun SearchMain(modifier: Modifier = Modifier) {
+fun SearchMain(
+    modifier: Modifier = Modifier,
+    onDevProfileClick: () -> Unit
+) {
     var username by remember {
         mutableStateOf("")
     }
@@ -206,7 +213,8 @@ fun SearchMain(modifier: Modifier = Modifier) {
                 DevProfile(
                     icon = R.drawable.user_icon_3,
                     name = "ASHLsdfj152",
-                    desctiption = "PLEASE DON'T STOP"
+                    desctiption = "PLEASE DON'T STOP",
+                    onDevProfile = onDevProfileClick
                 )
 
                 Spacer(
@@ -220,7 +228,8 @@ fun SearchMain(modifier: Modifier = Modifier) {
                 DevProfile(
                     icon = R.drawable.user_icon_1,
                     name = "Fork",
-                    desctiption = "Just a Fork"
+                    desctiption = "Just a Fork",
+                    onDevProfile = onDevProfileClick
                 )
 
                 Spacer(
@@ -234,7 +243,8 @@ fun SearchMain(modifier: Modifier = Modifier) {
                 DevProfile(
                     icon = R.drawable.user_icon_2,
                     name = "Spoon",
-                    desctiption = "Just a Spoon"
+                    desctiption = "Just a Spoon",
+                    onDevProfile = onDevProfileClick
                 )
 
 
@@ -267,7 +277,8 @@ fun SearchMain(modifier: Modifier = Modifier) {
                 DevProfile(
                     icon = R.drawable.user_icon_2,
                     name = "Spoon",
-                    desctiption = "Just a Spoon"
+                    desctiption = "Just a Spoon",
+                    onDevProfile = onDevProfileClick
                 )
 
                 Spacer(
@@ -281,7 +292,8 @@ fun SearchMain(modifier: Modifier = Modifier) {
                 DevProfile(
                     icon = R.drawable.user_icon_1,
                     name = "Fork",
-                    desctiption = "Just a Fork"
+                    desctiption = "Just a Fork",
+                    onDevProfile = onDevProfileClick
                 )
 
                 Spacer(
@@ -295,7 +307,8 @@ fun SearchMain(modifier: Modifier = Modifier) {
                 DevProfile(
                     icon = R.drawable.user_icon_3,
                     name = "ASHLsdfj152",
-                    desctiption = "PLEASE DON'T STOP"
+                    desctiption = "PLEASE DON'T STOP",
+                    onDevProfile = onDevProfileClick
                 )
             }
         }
