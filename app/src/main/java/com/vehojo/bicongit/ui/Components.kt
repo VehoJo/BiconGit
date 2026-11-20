@@ -115,7 +115,8 @@ fun NavBar(
 
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.clickable { onSearchScreen() }) {
+                    modifier = Modifier.clickable { onSearchScreen() }
+                ) {
                     Icon(
                         modifier = Modifier.size(25.dp),
                         imageVector = ImageVector.vectorResource(id = R.drawable.search_icon),
@@ -189,9 +190,11 @@ fun Repositories(
     progLang: String,
     star: String,
     fork: String,
-    iconColor: Color
+    iconColor: Color,
+    onRepoScreen: () -> Unit
 ) {
     Column(modifier = Modifier
+        .clickable{onRepoScreen()}
         .fillMaxWidth()
         .clip(RoundedCornerShape(12.dp))
         .background(White.copy(alpha = 0.05f))
@@ -434,7 +437,8 @@ fun RepositoriesPreview() {
         progLang = "HTML",
         star = "0",
         fork = "0",
-        iconColor = Yellow
+        iconColor = Yellow,
+        onRepoScreen = {}
     )
 }
 

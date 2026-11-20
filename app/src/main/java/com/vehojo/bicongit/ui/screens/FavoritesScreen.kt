@@ -54,7 +54,7 @@ import com.vehojo.bicongit.ui.theme.White
 import com.vehojo.bicongit.ui.theme.Yellow
 
 @Composable
-fun FavoritesScreen(showContent: Boolean = true) {
+fun FavoritesScreen(showContent: Boolean = true, onRepoScreen: () -> Unit) {
     Column(modifier = Modifier.fillMaxSize().background(Background)) {
         Spacer(modifier = Modifier.systemBarsPadding())
         AnimatedContent(
@@ -63,7 +63,7 @@ fun FavoritesScreen(showContent: Boolean = true) {
             label = "favoritesContent"
         ) { ready ->
             if (ready) {
-                FavoritesMain()
+                FavoritesMain(onRepoScreen = onRepoScreen)
             } else {
                 Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                     CircularProgressIndicator(color = ButtonColor)
@@ -75,9 +75,8 @@ fun FavoritesScreen(showContent: Boolean = true) {
     }
 }
 
-@Preview
 @Composable
-fun FavoritesMain() {
+fun FavoritesMain(onRepoScreen: () -> Unit) {
     var savedRep by remember { mutableStateOf("") }
 
     Column(modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp)) {
@@ -170,7 +169,8 @@ fun FavoritesMain() {
                     progLang = "JavaScript",
                     star = "234B",
                     fork = "43.2B",
-                    iconColor = Yellow
+                    iconColor = Yellow,
+                    onRepoScreen = onRepoScreen
                 )
             }
 
@@ -182,7 +182,8 @@ fun FavoritesMain() {
                     progLang = "Kotlin",
                     star = "234B",
                     fork = "43.2B",
-                    iconColor = Yellow
+                    iconColor = Yellow,
+                    onRepoScreen = onRepoScreen
                 )
             }
 
@@ -194,7 +195,8 @@ fun FavoritesMain() {
                     progLang = "HTML",
                     star = "234B",
                     fork = "43.2B",
-                    iconColor = Yellow
+                    iconColor = Yellow,
+                    onRepoScreen = onRepoScreen
                 )
             }
 
@@ -206,9 +208,16 @@ fun FavoritesMain() {
                     progLang = "HTML",
                     star = "234B",
                     fork = "43.2B",
-                    iconColor = Yellow
+                    iconColor = Yellow,
+                    onRepoScreen = onRepoScreen
                 )
             }
         }
     }
+}
+
+@Preview
+@Composable
+fun FavoritesPreview() {
+    FavoritesScreen(onRepoScreen = {})
 }

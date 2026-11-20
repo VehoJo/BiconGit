@@ -51,7 +51,10 @@ import com.vehojo.bicongit.ui.theme.White
 import com.vehojo.bicongit.ui.theme.Yellow
 
 @Composable
-fun ProfileScreen(showContent: Boolean = true) {
+fun ProfileScreen(
+    showContent: Boolean = true,
+    onRepoScreen: () -> Unit
+) {
     Column(modifier = Modifier.fillMaxSize().background(Background)) {
         Spacer(modifier = Modifier.systemBarsPadding())
         AnimatedContent(
@@ -60,7 +63,7 @@ fun ProfileScreen(showContent: Boolean = true) {
             label = "profileContent"
         ) { ready ->
             if (ready) {
-                ProfileMain()
+                ProfileMain(onRepoScreen = onRepoScreen)
             } else {
                 Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                     CircularProgressIndicator(color = ButtonColor)
@@ -72,9 +75,8 @@ fun ProfileScreen(showContent: Boolean = true) {
     }
 }
 
-@Preview
 @Composable
-fun ProfileMain() {
+fun ProfileMain(onRepoScreen: () -> Unit) {
     var username = "spoon_QWE123KDJAS_"
     Column(modifier = Modifier.padding(horizontal = 24.dp)) {
         Row(horizontalArrangement = Arrangement.Center) {
@@ -312,7 +314,8 @@ fun ProfileMain() {
                     progLang = "Kotlin",
                     star = "234B",
                     fork = "43.2B",
-                    iconColor = White.copy(alpha = 0.55f)
+                    iconColor = White.copy(alpha = 0.55f),
+                    onRepoScreen = onRepoScreen
                 )
             }
 
@@ -324,7 +327,8 @@ fun ProfileMain() {
                     progLang = "JavaScript",
                     star = "234B",
                     fork = "43.2B",
-                    iconColor = White.copy(alpha = 0.55f)
+                    iconColor = White.copy(alpha = 0.55f),
+                    onRepoScreen = onRepoScreen
                 )
             }
 
@@ -336,7 +340,8 @@ fun ProfileMain() {
                     progLang = "HTML",
                     star = "234B",
                     fork = "43.2B",
-                    iconColor = White.copy(alpha = 0.55f)
+                    iconColor = White.copy(alpha = 0.55f),
+                    onRepoScreen = onRepoScreen
                 )
             }
 
@@ -348,7 +353,8 @@ fun ProfileMain() {
                     progLang = "JavaScript",
                     star = "234B",
                     fork = "43.2B",
-                    iconColor = White.copy(alpha = 0.55f)
+                    iconColor = White.copy(alpha = 0.55f),
+                    onRepoScreen = onRepoScreen
                 )
             }
         }

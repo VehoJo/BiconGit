@@ -56,7 +56,11 @@ import com.vehojo.bicongit.ui.theme.White
 import com.vehojo.bicongit.ui.theme.Yellow
 
 @Composable
-fun DevProfileScreen(showContent: Boolean = true, navHostController: NavHostController) {
+fun DevProfileScreen(
+    showContent: Boolean = true,
+    navHostController: NavHostController,
+    onRepoScreenClick: () -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -76,7 +80,10 @@ fun DevProfileScreen(showContent: Boolean = true, navHostController: NavHostCont
             label = "devProfileContent"
         ) { ready ->
             if (ready) {
-                DevProfileMain(navHostController = navHostController)
+                DevProfileMain(
+                    navHostController = navHostController,
+                    onRepoScreenClick = onRepoScreenClick
+                )
             } else {
                 Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                     CircularProgressIndicator(color = ButtonColor)
@@ -87,7 +94,10 @@ fun DevProfileScreen(showContent: Boolean = true, navHostController: NavHostCont
 }
 
 @Composable
-fun DevProfileMain(navHostController: NavHostController) {
+fun DevProfileMain(
+    navHostController: NavHostController,
+    onRepoScreenClick: () -> Unit
+) {
     var username = "VehoJo"
     Column(modifier = Modifier.padding(horizontal = 24.dp)) {
         Back(
@@ -334,7 +344,8 @@ fun DevProfileMain(navHostController: NavHostController) {
                     progLang = "Kotlin",
                     star = "234B",
                     fork = "43.2B",
-                    iconColor = White.copy(alpha = 0.55f)
+                    iconColor = White.copy(alpha = 0.55f),
+                    onRepoScreen = onRepoScreenClick
                 )
             }
 
@@ -346,7 +357,8 @@ fun DevProfileMain(navHostController: NavHostController) {
                     progLang = "JavaScript",
                     star = "234B",
                     fork = "43.2B",
-                    iconColor = White.copy(alpha = 0.55f)
+                    iconColor = White.copy(alpha = 0.55f),
+                    onRepoScreen = onRepoScreenClick
                 )
             }
 
@@ -358,7 +370,8 @@ fun DevProfileMain(navHostController: NavHostController) {
                     progLang = "HTML",
                     star = "234B",
                     fork = "4",
-                    iconColor = White.copy(alpha = 0.55f)
+                    iconColor = White.copy(alpha = 0.55f),
+                    onRepoScreen = onRepoScreenClick
                 )
             }
 
@@ -370,7 +383,8 @@ fun DevProfileMain(navHostController: NavHostController) {
                     progLang = "JavaScript",
                     star = "234B",
                     fork = "43.2B",
-                    iconColor = White.copy(alpha = 0.55f)
+                    iconColor = White.copy(alpha = 0.55f),
+                    onRepoScreen = onRepoScreenClick
                 )
             }
         }
@@ -380,5 +394,8 @@ fun DevProfileMain(navHostController: NavHostController) {
 @Preview
 @Composable
 fun DevProfilePreview() {
-    DevProfileScreen(navHostController = rememberNavController())
+    DevProfileScreen(
+        navHostController = rememberNavController(),
+        onRepoScreenClick = {}
+    )
 }

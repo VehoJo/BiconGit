@@ -13,6 +13,7 @@ import com.vehojo.bicongit.ui.screens.FavoritesScreen
 import com.vehojo.bicongit.ui.screens.ProfileScreen
 import com.vehojo.bicongit.ui.screens.SearchScreen
 import com.vehojo.bicongit.ui.screens.DevProfileScreen
+import com.vehojo.bicongit.ui.screens.RepoScreen
 import com.vehojo.bicongit.ui.theme.Background
 
 @Composable
@@ -79,7 +80,14 @@ fun AppNavHost(
             }
         ) {
             val animationFinished = transition.currentState == transition.targetState
-            FavoritesScreen(showContent = animationFinished)
+            FavoritesScreen(
+                showContent = animationFinished,
+                onRepoScreen = {
+                    navHostController.safeNavigate(Destination.RepositoryScreen.route) {
+                        launchSingleTop = true
+                    }
+                }
+            )
         }
 
         composable(
@@ -104,7 +112,14 @@ fun AppNavHost(
             }
         ) {
             val animationFinished = transition.currentState == transition.targetState
-            ProfileScreen(showContent = animationFinished)
+            ProfileScreen(
+                showContent = animationFinished,
+                onRepoScreen = {
+                    navHostController.safeNavigate(Destination.RepositoryScreen.route) {
+                        launchSingleTop = true
+                    }
+                }
+            )
         }
 
         composable(
@@ -126,6 +141,33 @@ fun AppNavHost(
 
             DevProfileScreen(
                 showContent = animationFinished,
+                navHostController = navHostController,
+                onRepoScreenClick = {
+                    navHostController.safeNavigate(Destination.RepositoryScreen.route) {
+                        launchSingleTop = true
+                    }
+                }
+            )
+        }
+
+        composable(
+            Destination.RepositoryScreen.route,
+            enterTransition = {
+                slideIntoContainer(
+                    AnimatedContentTransitionScope.SlideDirection.Left,
+                    tween(500)
+                )
+            },
+            exitTransition = {
+                slideOutOfContainer(
+                    AnimatedContentTransitionScope.SlideDirection.Right,
+                    tween(500)
+                )
+            }
+        ) {
+            val animationFinished = transition.currentState == transition.targetState
+
+            RepoScreen(
                 navHostController = navHostController
             )
         }
